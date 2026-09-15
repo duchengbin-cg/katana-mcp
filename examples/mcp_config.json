@@ -4,7 +4,7 @@
       "command": "uvx",
       "args": [
         "--from",
-        "git+https://github.com/YOUR_GITHUB_USERNAME/katana-mcp#subdirectory=mcp_server",
+        "git+https://github.com/duchengbin-cg/katana-mcp#subdirectory=mcp_server",
         "katana-mcp"
       ],
       "env": {
