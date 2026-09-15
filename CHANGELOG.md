@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.2.1 (2026-09-16)
+
+Katana 9.0 support pass (officially verified against Foundry's 9.0v1 specs:
+Python 3.11.11, Qt/PySide 6.5.3, VFX Reference Platform CY2025, USD 25.08).
+
+- `katana_status` now reports `pythonVersion` and `qtBinding` detected in
+  the session
+- `katana_get_env` also surfaces USD/PXR/FN_/MaterialX variables (Katana 9
+  is USD-centric)
+- README: compatibility matrix for Katana 5–9, Katana 9.0 notes (new
+  UsdSuperLayer/UsdGaffer/UsdMaterial node types work via existing tools),
+  launcher example updated to a Katana 9.0v1 path
+- README: architecture diagram switched to mermaid, client list mentions
+  Codex/ChatGPT
+
 ## 0.2.0 (2026-09-16)
 
 Major feature expansion — the tool count grows from 17 to 45+.

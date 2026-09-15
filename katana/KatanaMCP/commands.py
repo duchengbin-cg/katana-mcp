@@ -137,6 +137,16 @@ def cmd_get_info():
         info["pid"] = os.getpid()
     except Exception:
         pass
+    try:
+        import sys
+        info["pythonVersion"] = sys.version.split()[0]
+    except Exception:
+        pass
+    try:
+        from . import qtcompat
+        info["qtBinding"] = qtcompat.QT_BINDING
+    except Exception:
+        pass
     return info
 
 
@@ -1031,7 +1041,8 @@ def cmd_get_env(name=None):
     interesting = [k for k in sorted(os.environ)
                    if k.startswith(("KATANA", "OCIO", "ARNOLD", "RENDERMAN",
                                     "RMAN", "VRAY", "DELIGHT", "PATH",
-                                    "PYTHONPATH", "LD_LIBRARY"))]
+                                    "PYTHONPATH", "LD_LIBRARY",
+                                    "USD", "PXR", "FN_", "MATERIALX"))]
     return {"ok": True, "count": len(interesting),
             "env": {k: os.environ.get(k) for k in interesting}}
 

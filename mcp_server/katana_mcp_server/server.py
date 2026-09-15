@@ -479,7 +479,7 @@ def katana_create_launcher_bat(katana_exe: str, output_path: str,
     """Generate a Windows .bat that sets environment variables (renderer
     paths, OCIO, KATANA_RESOURCES, MCP autostart...) and launches Katana,
     optionally opening a project. Example katana_exe:
-    'C:/Program Files/Katana7.0v2/bin/katanaBin.exe'"""
+    'C:/Program Files/Katana9.0v1/bin/katanaBin.exe'"""
     return scaffold.create_launcher_bat(
         katana_exe=katana_exe, output_path=output_path,
         project_path=project_path or None, env_vars=env_vars,

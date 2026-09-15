@@ -220,9 +220,24 @@ developed without launching Katana.
 
 ## Compatibility
 
-- Katana 5.x – 8.x (Qt shim covers PySide2 and PySide6). Version-sensitive
-  APIs (backdrop extents, render entry points, scene graph) are probed at
-  runtime and report honestly if a Katana release lacks them.
+| Katana | Python | Qt binding | Notes |
+|---|---|---|---|
+| 5.x – 7.x | 3.7 – 3.10 | PySide2 (Qt 5) | Qt shim falls back automatically |
+| 8.x | 3.11 | PySide6 (Qt 6.5) | VFX Reference Platform CY2024 |
+| **9.x** | **3.11 (3.11.11)** | **PySide6 (Qt 6.5.3)** | **VFX Reference Platform CY2025, USD 25.08 — primary target** |
+
+- The plugin's Qt shim auto-detects PySide6 / PySide2, so one codebase runs
+  on all supported versions. `katana_status` reports the detected Python
+  version and Qt binding inside your session.
+- **Katana 9.0 notes**: everything in this repo is pure Python ≥ 3.9 syntax
+  and runs on 9.0's Python 3.11. The new native-USD node types
+  (`UsdSuperLayer`, `UsdGaffer`, `UsdMaterial`, `Usd*Create` prims) are
+  regular node types — discover them with
+  `katana_get_node_types(filter="Usd")` and build with `katana_create_node`.
+  `katana_get_env` also surfaces USD/PXR/FN_/MaterialX variables.
+- Version-sensitive APIs (backdrop extents, render entry points, scene
+  graph) are probed at runtime and report honestly if a Katana release
+  lacks them.
 - MCP server: Python ≥ 3.9, depends only on the official `mcp` package
 
 ## Roadmap
