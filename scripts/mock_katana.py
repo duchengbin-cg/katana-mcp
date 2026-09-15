@@ -65,7 +65,9 @@ def dispatch(method, params):
         return {"cleared": True}
     if method == "ping":
         return {"ok": True, "service": "mock-katana-mcp"}
-    raise ValueError("Unknown method: %s" % method)
+    # Generic fallback so new methods can be smoke-tested end-to-end.
+    add_log("INFO", "mock handled %s(%s)" % (method, params))
+    return {"ok": True, "mock": True, "method": method, "params": params}
 
 
 class Handler(socketserver.StreamRequestHandler):
