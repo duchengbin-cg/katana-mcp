@@ -2,8 +2,8 @@
 
 An [MCP (Model Context Protocol)](https://modelcontextprotocol.io) bridge for
 **Foundry Katana**. Katana does not ship an official MCP interface — this
-project adds one, so AI assistants (Claude, WorkBuddy, Cursor, ...) can talk
-directly to a running Katana session:
+project adds one, so AI assistants (Claude, Codex, ChatGPT, WorkBuddy,
+Cursor, ...) can talk directly to a running Katana session:
 
 - **Read logs** — application messages, script output and render output
   printed to the console, captured in a ring buffer inside Katana
@@ -25,15 +25,46 @@ directly to a running Katana session:
 
 ## Architecture
 
-Two components:
-
-```
-┌────────────────────────┐      JSON-lines over TCP       ┌───────────────────────┐      stdio (MCP)     ┌─────────────┐
-│  Foundry Katana        │      127.0.0.1:17820           │  katana-mcp server    │                      │  AI client  │
-│  (KatanaMCP plugin:    │ ◄────────────────────────────► │  (Python / FastMCP)   │ ◄──────────────────► │  Claude /   │
-│   menu + panel + TCP   │                                │  45+ tool bridge      │                      │  WorkBuddy  │
-│   service + log buffer)│                                │                       │                      │  ...        │
-└────────────────────────┘                                └───────────────────────┘                      └─────────────┘
+```mermaid
+flowchart LR
+subgraph Client[" 🤖 AI Client "]
+direction TB
+A1("Claude Desktop / Code")
+A2("Codex / ChatGPT")
+A3("Cursor / VS Code")
+A4("WorkBuddy")
+end
+subgraph MCP[" ⚡ katana-mcp Server "]
+direction TB
+B1("🔧 45+ Tools")
+B2("📡 TCP Client Bridge")
+B3("✅ Log Verification")
+B4("🧰 Local Scaffolding")
+end
+subgraph Katana[" 🔶 Foundry Katana "]
+direction TB
+C1("🖥️ Menu + Panel")
+C2("📡 TCP Service :17820")
+C3("📝 Log Ring Buffer")
+C4("🎛️ NodegraphAPI Handlers")
+C1 --> C2
+C2 --> C3
+C2 --> C4
+end
+Client -. "MCP Protocol · stdio" .-> MCP
+MCP -. "JSON-lines / TCP · port 17820" .-> Katana
+classDef clientBox fill:#f0f4ff,stroke:#b8c9e8,stroke-width:1px,color:#2d3748,rx:12,ry:12
+classDef mcpBox fill:#eef6f0,stroke:#a8d5b8,stroke-width:1px,color:#2d3748,rx:12,ry:12
+classDef katanaBox fill:#fff5f0,stroke:#e8c4a8,stroke-width:1px,color:#2d3748,rx:12,ry:12
+classDef clientNode fill:#dbe4f8,stroke:#96b0dc,stroke-width:1px,color:#2d3748,rx:8,ry:8
+classDef mcpNode fill:#d4edda,stroke:#82c896,stroke-width:1px,color:#2d3748,rx:8,ry:8
+classDef katanaNode fill:#fde4d0,stroke:#e0a87c,stroke-width:1px,color:#2d3748,rx:8,ry:8
+class Client clientBox
+class MCP mcpBox
+class Katana katanaBox
+class A1,A2,A3,A4 clientNode
+class B1,B2,B3,B4 mcpNode
+class C1,C2,C3,C4 katanaNode
 ```
 
 - `katana/` — the in-Katana plugin. Adds a **Katana MCP** main-menu entry and
