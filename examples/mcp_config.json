@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "katana": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/YOUR_GITHUB_USERNAME/katana-mcp#subdirectory=mcp_server",
+        "katana-mcp"
+      ],
+      "env": {
+        "KATANA_MCP_HOST": "127.0.0.1",
+        "KATANA_MCP_PORT": "17820"
+      }
+    }
+  }
+}
