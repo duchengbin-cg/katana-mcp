@@ -334,6 +334,21 @@ ordered by likelihood of encountering them:
     manually with `LightCreate` + a light material. Registration in the
     render is done by the package's internal `LightListEdit`, which writes
     the `lightList` attribute at `/root/world`.
+13. **Light-shader parameters live under `shaders.arnoldLightParams`**: on a
+    GafferThree light package's Material node, GA leaves created under the
+    generic `shaders.parameters` group are **silently dropped** at cook time.
+    KtoA routes light-shader settings through the sibling group
+    `shaders.arnoldLightParams` (next to `arnoldLightShader =
+    'skydome_light'`). Create `filename` / `intensity` etc. there with the
+    `enable/value/type` leaf structure — they then cook to
+    `material.arnoldLightParams.*` on the light location. (Surface shaders
+    likewise use `shaders.arnoldSurfaceParams`.)
+14. **Cook cache vs. parameter changes**: after changing a parameter (or an
+    expression-driven user parameter), call
+    `Utils.EventModule.ProcessAllEvents()` **after** the change and only then
+    re-cook (`Nodes3DAPI.GetGeometryProducer`). Flushing before the change
+    leaves the invalidation events queued and the producer returns the stale
+    cached scene with the old values.
 
 ---
 
