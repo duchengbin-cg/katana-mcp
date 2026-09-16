@@ -23,6 +23,12 @@ Cursor, ...) can talk directly to a running Katana session:
   environment setup, project directory trees, SuperTool / panel / Python
   tool skeletons (no Katana connection required)
 
+![katana-mcp panel running inside Katana 9.0v1, serving an AI client session](docs/images/katana_mcp_panel.png)
+
+*The katana-mcp shelf panel inside Katana: the service listens on
+127.0.0.1 only, and the captured log shows a live AI client driving the
+node graph (creating switches, gaffers, groups) in real time.*
+
 ## Architecture
 
 ```mermaid
