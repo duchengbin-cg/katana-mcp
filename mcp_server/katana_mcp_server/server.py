@@ -560,6 +560,45 @@ def get_lookdev_skill_guide() -> str:
     return _read_skill_doc("katana_lookdev_skill.md")
 
 
+_SKILL_FILES = {
+    "lookdev": "katana_lookdev_skill.md",
+    "shot_assembly": "katana_shot_assembly_skill.md",
+    "lighting": "katana_lighting_setup_skill.md",
+    "batch": "katana_batch_dispatch_skill.md",
+}
+
+
+@mcp.tool()
+def load_katana_skill(category: str) -> str:
+    """Load the Katana skill guide for a task category. Call this BEFORE
+    building any node graph so generated code follows the verified
+    specification (node types, parameter paths, Python blueprints,
+    pitfalls).
+
+    category must be one of:
+      - 'lookdev'        : asset materials, textures, LookFile (.klf)
+                           baking/binding (LookFileAssign, LookFileBake,
+                           MaterialAssign).
+      - 'shot_assembly'  : shot scene assembly, asset referencing,
+                           camera/edit alignment (Alembic_In, UsdIn,
+                           UsdReferenceSet, CameraCreate, Isolate, Switch,
+                           VariableSwitch, GroupStack).
+      - 'lighting'       : lighting rigs, GafferThree packages, AOV and
+                           RenderPass strategy (GafferThree,
+                           <Renderer>OutputChannelDefine,
+                           RenderOutputDefine, RenderSettings).
+      - 'batch'          : Graph State Variables (GSV), multi-shot
+                           overrides, headless batch rendering and farm
+                           dispatch (VariableSwitch, VariableSet,
+                           katana --batch, --var, RenderManager, FarmAPI).
+    """
+    filename = _SKILL_FILES.get(category)
+    if filename is None:
+        return ("Unknown category '%s'. Valid categories: %s"
+                % (category, ", ".join(sorted(_SKILL_FILES))))
+    return _read_skill_doc(filename)
+
+
 # ===========================================================================
 # entry point
 # ===========================================================================

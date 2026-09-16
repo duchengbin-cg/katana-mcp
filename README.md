@@ -188,7 +188,17 @@ Connection settings (env vars for the MCP server process):
 ### Knowledge / skill guides (no Katana needed)
 | Tool | Purpose |
 |---|---|
-| `get_lookdev_skill_guide` | Bundled LookDev construction guide: standard topology, node registry, CEL patterns, verified `NodegraphAPI` blueprint and pitfalls — distilled from 42 official Katana example projects. Call it before generating LookDev node-graph code. Source: [`skills/katana_lookdev_skill.md`](skills/katana_lookdev_skill.md) |
+| `load_katana_skill` | Load a pipeline skill guide by category — call it **before** building any node graph so generated code follows the verified spec (node types, parameter paths, `NodegraphAPI` blueprints, pitfalls). Categories: `lookdev` (materials / LookFile), `shot_assembly` (asset referencing, USD/Alembic scene tree, camera alignment), `lighting` (GafferThree packages, AOV / RenderPass strategy), `batch` (GSV multi-shot overrides, `katana --batch`, farm dispatch). All four guides were distilled from 42 official Katana example projects and verified against a live Katana 9.0v1 session. Sources: [`skills/`](skills) |
+| `get_lookdev_skill_guide` | Shortcut for `load_katana_skill('lookdev')`. Source: [`skills/katana_lookdev_skill.md`](skills/katana_lookdev_skill.md) |
+
+Router index (which guide the agent should load):
+
+| Task involves… | Category |
+|---|---|
+| Asset texture/material binding, LookFile generation | `lookdev` |
+| Assembling shots, importing Alembic/USD scene trees | `shot_assembly` |
+| Lighting, GafferThree, AOV passes | `lighting` |
+| GSV switching, multi-shot batch renders, farm submission | `batch` |
 
 ### Example: full project bootstrap in one conversation
 
