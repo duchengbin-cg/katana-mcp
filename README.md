@@ -185,6 +185,11 @@ Connection settings (env vars for the MCP server process):
 | `katana_scaffold_panel_tool` | KatanaPanel tab skeleton |
 | `katana_scaffold_python_tool` | Startup-menu tool or importable shelf script |
 
+### Knowledge / skill guides (no Katana needed)
+| Tool | Purpose |
+|---|---|
+| `get_lookdev_skill_guide` | Bundled LookDev construction guide: standard topology, node registry, CEL patterns, verified `NodegraphAPI` blueprint and pitfalls — distilled from 42 official Katana example projects. Call it before generating LookDev node-graph code. Source: [`skills/katana_lookdev_skill.md`](skills/katana_lookdev_skill.md) |
+
 ### Example: full project bootstrap in one conversation
 
 > "Set up a new Katana project called `sh010_lighting` on my Z: drive:

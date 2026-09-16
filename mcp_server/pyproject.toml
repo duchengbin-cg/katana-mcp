@@ -6,11 +6,11 @@ build-backend = "setuptools.build_meta"
 name = "katana-mcp"
 version = "0.2.0"
 description = "MCP server that lets AI assistants control Foundry Katana: logs, script execution, node graph editing and result verification"
-readme = "../README.md"
+readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.9"
 dependencies = [
-    "mcp>=1.2.0",
+    "mcp>=1.2.0,<2",
 ]
 
 [project.scripts]
@@ -18,3 +18,6 @@ katana-mcp = "katana_mcp_server.server:main"
 
 [tool.setuptools.packages.find]
 include = ["katana_mcp_server*"]
+
+[tool.setuptools.package-data]
+katana_mcp_server = ["skills/*.md"]

@@ -524,6 +524,43 @@ def katana_scaffold_python_tool(name: str, base_directory: str,
 
 
 # ===========================================================================
+# knowledge / skill guides
+# ===========================================================================
+
+def _read_skill_doc(filename):
+    """Read a bundled skill guide, works both from an installed package
+    (importlib.resources) and from a raw source checkout."""
+    try:
+        from importlib import resources
+        ref = resources.files("katana_mcp_server").joinpath(
+            "skills", filename)
+        return ref.read_text(encoding="utf-8")
+    except Exception:
+        pass
+    here = os.path.dirname(os.path.abspath(__file__))
+    for candidate in (
+        os.path.join(here, "skills", filename),
+        os.path.join(here, os.pardir, os.pardir, "skills", filename),
+    ):
+        candidate = os.path.normpath(candidate)
+        if os.path.isfile(candidate):
+            with open(candidate, "r", encoding="utf-8") as fh:
+                return fh.read()
+    return ("Skill guide '%s' not found. Reinstall katana-mcp or check "
+            "the skills/ directory in the repository." % filename)
+
+
+@mcp.tool()
+def get_lookdev_skill_guide() -> str:
+    """Get the Katana LookDev construction guide: standard node-graph
+    topology, the node-type/parameter registry, CEL best practices, a
+    verified NodegraphAPI Python blueprint and known pitfalls. You MUST
+    call this tool before creating or editing a LookDev node graph so
+    that generated code follows the specification."""
+    return _read_skill_doc("katana_lookdev_skill.md")
+
+
+# ===========================================================================
 # entry point
 # ===========================================================================
 
